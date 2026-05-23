@@ -66,11 +66,16 @@ new class extends Component
                         </x-dropdown-link>
 
                         <!-- Authentication -->
-                        <button wire:click="logout" class="w-full text-start">
-                            <x-dropdown-link>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <button
+                                type="submit"
+                                class="w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
                                 {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </button>
+                            </button>
+                        </form>
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -117,11 +122,16 @@ new class extends Component
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
-                <button wire:click="logout" class="w-full text-start">
-                    <x-responsive-nav-link>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <button
+                        type="submit"
+                        class="w-full text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
                         {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </button>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
