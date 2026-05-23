@@ -184,7 +184,7 @@ php artisan migrate
 
 ---
 
-## Seed Demo Data (Optional)
+## Seed Demo Data (Required for Demo Clients & Tasks)
 
 ```bash
 php artisan db:seed

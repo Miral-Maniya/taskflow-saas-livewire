@@ -70,79 +70,126 @@
     <!-- MODAL -->
 
     <div
-        x-data="{ open: false }"
+        x-data="{ open: false,
+            closeModal() {
+                this.open = false
 
+                $wire.closeModal()
+            }
+        }"
         x-on:open-modal.window="open = true"
-
+        x-on:task-created.window="closeModal()"
         x-show="open"
-
-        class="fixed inset-0 bg-black/50 flex items-center justify-center"
+        x-cloak
+        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
     >
 
-        <div class="bg-white p-6 rounded w-96">
+        <div class="bg-white p-6 rounded-xl shadow-xl w-full max-w-md">
 
-            <h2 class="text-xl font-bold mb-4">
+            <h2 class="text-2xl font-bold mb-5">
                 Create Task
             </h2>
 
-            <input
-                type="text"
-                wire:model="title"
-                placeholder="Task title"
-                class="border rounded p-2 w-full mb-3"
-            >
+            <!-- TITLE -->
 
-            <textarea
-                wire:model="description"
-                placeholder="Description"
-                class="border rounded p-2 w-full mb-3"
-            ></textarea>
+            <div class="mb-4">
 
-            <select
-                wire:model="client_id"
-                class="border rounded p-2 w-full mb-3"
-            >
+                <input
+                    type="text"
+                    wire:model="title"
+                    placeholder="Task title"
+                    class="border rounded-lg p-3 w-full"
+                >
 
-                <option value="">
-                    Select Client
-                </option>
+                @error('title')
+                    <span class="text-red-500 text-sm">
+                        {{ $message }}
+                    </span>
+                @enderror
 
-                @foreach($clients as $client)
+            </div>
 
-                    <option value="{{ $client->id }}">
-                        {{ $client->name }}
+            <!-- DESCRIPTION -->
+
+            <div class="mb-4">
+
+                <textarea
+                    wire:model="description"
+                    placeholder="Description"
+                    class="border rounded-lg p-3 w-full"
+                ></textarea>
+
+            </div>
+
+            <!-- CLIENT -->
+
+            <div class="mb-4">
+
+                <select
+                    wire:model="client_id"
+                    class="border rounded-lg p-3 w-full"
+                >
+
+                    <option value="">
+                        Select Client
                     </option>
 
-                @endforeach
+                    @foreach($clients as $client)
 
-            </select>
+                        <option value="{{ $client->id }}">
+                            {{ $client->name }}
+                        </option>
 
-            <select
-                wire:model="priority"
-                class="border rounded p-2 w-full mb-3"
-            >
+                    @endforeach
 
-                <option value="low">Low</option>
+                </select>
 
-                <option value="medium">Medium</option>
+                @error('client_id')
+                    <span class="text-red-500 text-sm">
+                        {{ $message }}
+                    </span>
+                @enderror
 
-                <option value="high">High</option>
+            </div>
 
-            </select>
+            <!-- PRIORITY -->
 
-            <button
-                wire:click="save"
-                class="bg-green-500 text-white px-4 py-2 rounded"
-            >
-                Save Task
-            </button>
+            <div class="mb-5">
 
-            <button
-                @click="open = false"
-                class="ml-2 text-red-500"
-            >
-                Close
-            </button>
+                <select
+                    wire:model="priority"
+                    class="border rounded-lg p-3 w-full"
+                >
+
+                    <option value="low">Low</option>
+
+                    <option value="medium">Medium</option>
+
+                    <option value="high">High</option>
+
+                </select>
+
+            </div>
+
+            <!-- BUTTONS -->
+
+            <div class="flex items-center gap-3">
+
+                <button
+                    wire:click="save"
+                    class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg"
+                >
+                    Save Task
+                </button>
+
+                <button
+                    @click="closeModal()"
+                    class="text-red-500 font-medium"
+                >
+                    Close
+                </button>
+
+            </div>
 
         </div>
 

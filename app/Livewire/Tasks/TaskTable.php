@@ -46,6 +46,21 @@ class TaskTable extends Component
             'status',
             'client_id',
         ]);
+
+        $this->dispatch('task-created');
+    }
+
+    public function closeModal()
+    {
+        $this->resetValidation();
+
+        $this->reset([
+            'title',
+            'description',
+            'client_id',
+        ]);
+
+        $this->priority = 'medium';
     }
 
     public function render()
